@@ -307,11 +307,9 @@
     .scene-photos .envelope-wrap,
     .scene-finale .envelope-wrap {
       pointer-events: none;
-    }
-
-    .scene-letter .envelope-wrap {
-      transform: translateY(38vh) scale(0.52);
-      opacity: 0.12;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(46vh) scale(0.42);
     }
 
     .scene-letter .invite,
@@ -323,6 +321,7 @@
     }
 
     .scene-photos-out .envelope-wrap {
+      visibility: visible;
       transform: translateY(6vh) scale(0.92);
       opacity: 1;
       filter: none;
@@ -331,24 +330,6 @@
 
     .scene-photos-out .peek-letter {
       opacity: 0;
-    }
-
-    .scene-photos .envelope-wrap {
-      transform: translateY(40vh) scale(0.5);
-      opacity: 0.1;
-    }
-
-    .scene-finale .envelope-wrap {
-      transform: translateY(8vh) scale(0.7);
-      opacity: 0;
-    }
-
-    @media (max-width: 700px) {
-      .scene-letter .envelope-wrap,
-      .scene-photos .envelope-wrap {
-        transform: translateY(40vh) scale(0.5);
-        opacity: 0.1;
-      }
     }
 
     /* ---------- Letter ---------- */
@@ -388,6 +369,7 @@
     .scene-photos .letter-stage,
     .scene-finale .letter-stage {
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
       transform: translate(-120%, -50%) scale(0.92);
       transition-delay: 0s;
@@ -467,7 +449,6 @@
       font-weight: 400;
       letter-spacing: 0.02em;
       text-align: start;
-      text-indent: 2em;
     }
 
     .letter-page p + p {
@@ -476,16 +457,18 @@
 
     .letter-hint {
       position: relative;
-      z-index: 5;
+      z-index: 8;
       display: inline-block;
       margin-top: 1.05rem;
-      font-family: "Ma Shan Zheng", "Noto Serif SC", cursive;
-      font-size: 1.12rem;
+      font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+      font-size: 16px;
       color: var(--muted);
       letter-spacing: 0.04em;
-      border-bottom: 1px solid rgba(138, 128, 116, 0.35);
-      padding-bottom: 1px;
+      border-bottom: 1px solid rgba(138, 128, 116, 0.45);
+      padding: 10px 0 4px;
       min-height: 44px;
+      pointer-events: auto;
+      cursor: pointer;
       transition: color 0.25s ease, border-color 0.25s ease;
     }
 
@@ -532,6 +515,7 @@
       width: 28%;
       z-index: 3;
       background: transparent;
+      pointer-events: none;
     }
     .hit--left { left: 0; cursor: w-resize; }
     .hit--right { right: 0; cursor: e-resize; }
@@ -857,7 +841,6 @@
         </div>
         <div class="flap" aria-hidden="true">
           <div class="flap-face flap-face--front">
-            <span class="addr-to"><i>To</i><b>鼠</b></span>
             <span class="addr-date">2021 — 2026</span>
           </div>
           <div class="flap-face flap-face--inner"></div>
@@ -1185,9 +1168,10 @@
     document.getElementById("letterSheet").addEventListener("click", (e) => {
       if (state.scene !== "letter") return;
       if (e.target.closest(".letter-hint")) return;
-      const hit = e.target.closest(".hit");
-      if (!hit) return;
-      hit.dataset.dir === "next" ? next() : prev();
+      const rect = letterSheet.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      if (ratio < 0.28) prev();
+      else if (ratio > 0.72) next();
     });
 
     photosStage.addEventListener("click", (e) => {
