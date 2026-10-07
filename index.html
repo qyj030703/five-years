@@ -393,9 +393,9 @@
     .letter-sheet {
       position: relative;
       background: var(--letter);
-      min-height: min(42dvh, 390px);
+      min-height: 0;
       max-height: calc(100dvh - 72px);
-      padding: 2.1rem 1.55rem 3.4rem;
+      padding: 1.55rem 1.45rem 2.55rem;
       border-radius: 1px;
       box-shadow:
         0 1px 0 rgba(255, 255, 255, 0.7) inset,
@@ -418,7 +418,7 @@
 
     .letter-pages {
       position: relative;
-      min-height: 46dvh;
+      min-height: 0;
     }
 
     .letter-page {
@@ -458,27 +458,23 @@
 
     .letter-page p {
       font-size: 16px;
-      line-height: 1.85;
+      line-height: 1.82;
       color: var(--ink);
       font-weight: 400;
       letter-spacing: 0.02em;
       text-align: start;
-    }
-
-    .letter-page p + p {
-      margin-top: 1.15em;
       text-indent: 2em;
     }
 
-    .letter-page p.lede {
-      text-indent: 0;
+    .letter-page p + p {
+      margin-top: 0.8em;
     }
 
     .letter-hint {
       position: relative;
       z-index: 5;
       display: inline-block;
-      margin-top: 1.8rem;
+      margin-top: 1.05rem;
       font-family: "Ma Shan Zheng", "Noto Serif SC", cursive;
       font-size: 1.12rem;
       color: var(--muted);
@@ -787,8 +783,8 @@
         width: calc(100vw - 44px);
       }
       .letter-sheet {
-        padding: 1.55rem 1.15rem 3.15rem;
-        min-height: min(52dvh, 460px);
+        padding: 1.35rem 1.1rem 2.4rem;
+        min-height: 0;
       }
       .letter-page p {
         font-size: 16px;
@@ -812,8 +808,8 @@
     }
 
     @media (min-width: 700px) {
-      .letter-page p { font-size: 17px; line-height: 1.88; }
-      .letter-sheet { padding: 2.4rem 2.05rem 3.5rem; }
+      .letter-page p { font-size: 17px; line-height: 1.82; }
+      .letter-sheet { padding: 1.7rem 1.7rem 2.7rem; }
       .nav-arrow--prev { left: calc(50% - min(46vw, 340px) - 8px); }
       .nav-arrow--next { right: calc(50% - min(46vw, 340px) - 8px); }
     }
@@ -854,7 +850,7 @@
         <div class="letter-pages" id="letterPages"></div>
         <div class="hit hit--left" data-dir="prev" aria-hidden="true"></div>
         <div class="hit hit--right" data-dir="next" aria-hidden="true"></div>
-        <div class="letter-counter" id="letterCounter">01 / 06</div>
+        <div class="letter-counter" id="letterCounter">01 / 05</div>
       </article>
     </section>
 
@@ -891,9 +887,7 @@
     const LETTER_PAGES = [
       [
         "亲爱的鼠，当你收到这封信，我们已经在一起5年3天啦。",
-        "没有当面把信给你，是因为旅行结束之后也有了很多新的想法。在纸上删删改改，还是用这样的方式纪念我们这一年吧～"
-      ],
-      [
+        "没有当面把信给你，是因为旅行结束之后也有了很多新的想法。在纸上删删改改，还是用这样的方式纪念我们这一年吧～",
         "因为老实说，我发现真正到了五周年这一天时，我的心情很复杂，一方面，积年累月的长期感情当然值得庆祝和骄傲，另一方面，很多关于将来的担忧也占据了我的大脑。像我们在圣沃尔夫冈的小山坡上那次对话一样，我的未来还是一片迷雾，对于任何不确定的事情更是忧心忡忡（现在也还是有点，回家打开电脑，看到一个工作申请都没有进展，感觉很前途渺茫了呜呜呜）。"
       ],
       [
@@ -991,7 +985,7 @@
         const last = i === LETTER_PAGES.length - 1;
         const html = paras.map((p, idx) => `<p${idx === 0 ? ' class="lede"' : ""}>${p}</p>`).join("");
         const hint = last
-          ? `<button class="letter-hint" id="letterHint" type="button">信封里好像还有一些东西……</button>`
+          ? `<button class="letter-hint" id="letterHint" type="button">回顾一下我们这一年吧～</button>`
           : "";
         return `<div class="letter-page${i === 0 ? " is-active" : ""}" data-page="${i}">${html}${hint}</div>`;
       }).join("");
