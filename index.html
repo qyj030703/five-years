@@ -358,6 +358,9 @@
       top: 50%;
       width: min(520px, calc(100vw - 48px));
       z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       transform: translate(-50%, -42%) scale(0.34);
       opacity: 0;
       visibility: hidden;
@@ -392,6 +395,7 @@
 
     .letter-sheet {
       position: relative;
+      width: 100%;
       background: var(--letter);
       min-height: 0;
       max-height: calc(100dvh - 72px);
@@ -502,6 +506,23 @@
       letter-spacing: 0.22em;
       color: var(--muted-2);
       pointer-events: none;
+    }
+
+    .close-letter {
+      position: relative;
+      z-index: 6;
+      margin-top: 0.7rem;
+      font-family: "Ma Shan Zheng", "Noto Serif SC", cursive;
+      font-size: 1.05rem;
+      color: var(--muted);
+      min-height: 44px;
+      padding: 8px 14px;
+      transition: color 0.25s ease;
+    }
+
+    .close-letter:hover,
+    .close-letter:focus-visible {
+      color: var(--ink);
     }
 
     .hit {
@@ -852,6 +873,7 @@
         <div class="hit hit--right" data-dir="next" aria-hidden="true"></div>
         <div class="letter-counter" id="letterCounter">01 / 05</div>
       </article>
+      <button class="close-letter" id="closeLetter" type="button">合上信封</button>
     </section>
 
     <section class="photos-stage" id="photosStage" aria-hidden="true">
@@ -1155,6 +1177,10 @@
     prevBtn.addEventListener("click", prev);
     nextBtn.addEventListener("click", next);
     document.getElementById("replay").addEventListener("click", replay);
+    document.getElementById("closeLetter").addEventListener("click", (e) => {
+      e.stopPropagation();
+      replay();
+    });
 
     document.getElementById("letterSheet").addEventListener("click", (e) => {
       if (state.scene !== "letter") return;
